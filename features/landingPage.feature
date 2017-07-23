@@ -1,4 +1,4 @@
-Feature: Test Facebook login
+Feature: Test login
   As a QA
   I want to check login functionality
   by using both valid and invalid test data

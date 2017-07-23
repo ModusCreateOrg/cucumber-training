@@ -34,10 +34,5 @@
     "cucumber",
     "test",
     "selenium"
-  ],
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  }
+  ]
 }

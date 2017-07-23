@@ -175,8 +175,16 @@ exports.config = {
     // resolved to continue.
     //
     // Gets executed once before all workers get launched.
-    // onPrepare: function () {
-    // },
+    onPrepare: function () {
+        let fs = require('fs');
+
+        if (!fs.existsSync(__dirname + '/reports/screenShots')) {
+            if (!fs.existsSync(__dirname + '/reports')) {
+                fs.mkdirSync(__dirname + '/reports');
+            }
+            fs.mkdirSync(__dirname + '/reports/screenShots');
+        }
+    },
 
     //
     // Gets executed before test execution begins. At this point you can access
