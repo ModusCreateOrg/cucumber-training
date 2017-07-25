@@ -12,27 +12,15 @@ Feature: Test login
     Then I am successfully logged in
     And I am redirected to Home page
 
-  Scenario: Login using invalid username and password combination
-    When I login using email sergiu@moduscreate.com and password dummyPassword
+  Scenario Outline: Login using invalid username and password combination
+    When I login using email <email> and password <password>
     Then I am redirected to Login page
-    And invalid-password message is displayed
-
-  Scenario: Login using invalid username
-    When I login using email qwedsa@dsa.com and password dummyPassword
-    Then I am redirected to Login page
-    And non-existing-account message is displayed
-
-  Scenario: Login using empty username
-    When I login using email null and password dummyPassword
-    Then I am redirected to Login page
-    And non-existing-account message is displayed
-
-  Scenario: Login using empty password
-    When I login using email sergiu@moduscreate.com and password null
-    Then I am redirected to Login page
-    And invalid-password message is displayed
-
-  Scenario: Login using empty credentials
-    When I login using email null and password null
-    Then I am redirected to Login page
-    And non-existing-account message is displayed
+    And <message_type> message is displayed
+    Examples:
+      | email                  | password      | message_type                      |
+      | sergiu@moduscreate.com | dummyPassword | invalid_password_combination |
+      | qwedsa@dsa.com         | dummyPassword | non-existing_account              |
+      |                        | dummyPassword | non-existing_account              |
+      | sergiu@moduscreate.com |               | invalid_password                  |
+      |                        |               | non-existing_account              |
+      | qwedsa@dsa.com OR 1=1  | dummyPassword | non-existing_account              |
