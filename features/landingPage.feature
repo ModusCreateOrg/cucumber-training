@@ -9,7 +9,7 @@ Feature: Test login
 
   @Example
   Scenario: Login using valid credentials
-    When I login using email sergiu@moduscreate.com and password dummyPassword
+    When I login using email "sergiu@moduscreate.com" and password "dummyPassword"
     Then I am successfully logged in
     And I am redirected to Home page
 
