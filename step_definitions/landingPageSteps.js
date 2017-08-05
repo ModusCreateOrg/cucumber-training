@@ -8,5 +8,9 @@ defineSupportCode(({ Given, When }) => {
 
     When(/^I login using email ([^"]*)? and password ([^"]*)?$/, (userName, password) => {
         LandingPage.doLogin(userName, password);
+        const myMap = new Map();
+        myMap.set('userName', userName);
+        myMap.set('password', password);
+        browser.contextProcessor.postScenarioContext(myMap);
     });
 });

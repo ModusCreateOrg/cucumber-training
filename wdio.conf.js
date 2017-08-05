@@ -1,11 +1,11 @@
-require("babel-register")({
-    "presets": ["es2015-node6"],
-    "plugins": [
-        ["transform-runtime", {
-            "polyfill": false,
-            "regenerator": false
-        }]
-    ]
+require('babel-register')({
+    presets: ['es2015-node6'],
+    plugins: [
+        ['transform-runtime', {
+            polyfill: false,
+            regenerator: false,
+        }],
+    ],
 });
 
 exports.config = {
@@ -50,14 +50,14 @@ exports.config = {
     // out the Sauce Labs platform configurator - a great tool to configure your
     // capabilities: https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
-        // maxInstances can get overwritten per capability. So if you have an
-        // in-house Selenium grid with only 5 firefox instance available you can
-        // make sure that not more than 5 instance gets started at a time.
-        maxInstances: 1,
-        //
-        browserName: 'chrome',
-    }],
+    // capabilities: [{
+    //     // maxInstances can get overwritten per capability. So if you have an
+    //     // in-house Selenium grid with only 5 firefox instance available you can
+    //     // make sure that not more than 5 instance gets started at a time.
+    //     maxInstances: 1,
+    //     //
+    //     browserName: 'chrome',
+    // }],
     //
     // ===================
     // Test Configurations
@@ -81,7 +81,7 @@ exports.config = {
     //
     // Set a base URL in order to shorten url command calls. If your url
     // parameter starts with "/", then the base url gets prepended.
-    baseUrl: 'https://facebook.com/',
+    baseUrl: 'https://www.facebook.com',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -155,7 +155,7 @@ exports.config = {
         profile: [], // <string[]> (name) specify the profile to use
         strict: false, // <boolean> fail if there are any undefined or pending
         // steps
-        tags: require('./utils/tagProcessor.js')(process.argv),
+        tags: require('./utilities/tagProcessor.js')(process.argv),
         // <string[]> (expression) only execute the features or scenarios with
         // tags matching the expression
         timeout: 20000,     // <number> timeout for step definitions
@@ -175,14 +175,16 @@ exports.config = {
     // resolved to continue.
     //
     // Gets executed once before all workers get launched.
-    onPrepare: function () {
-        let fs = require('fs');
+    // eslint-disable-next-line object-shorthand
+    onPrepare: function onPrepare() {
+        const fs = require('fs');
+        const path = require('path');
 
-        if (!fs.existsSync(__dirname + '/reports/screenShots')) {
-            if (!fs.existsSync(__dirname + '/reports')) {
-                fs.mkdirSync(__dirname + '/reports');
+        if (!fs.existsSync(path.join(__dirname, '/reports/screenShots'))) {
+            if (!fs.existsSync(path.join(__dirname, '/reports'))) {
+                fs.mkdirSync(path.join(__dirname, '/reports'));
             }
-            fs.mkdirSync(__dirname + '/reports/screenShots');
+            fs.mkdirSync(path.join(__dirname, '/reports/screenShots'));
         }
     },
 
@@ -199,6 +201,11 @@ exports.config = {
         global.expect = chai.expect;
         global.assert = chai.assert;
         global.should = chai.should();
+
+        require('./utilities/commandProcessor');
+
+        browser.contextProcessor = require('./utilities/contextProcessor');
+        browser.params = this.params;
     },
     //
     // Hook that gets executed before the suite starts
@@ -219,10 +226,33 @@ exports.config = {
     // Cucumber) starts.
     // beforeTest: function beforeTest(test) {
     // },
+
+    beforeFeature: function beforeFeature(feature) {
+        // console.log(feature); // This will print the feature object
+        feature.tags.forEach((tag) => {
+            console.log(tag.name); // This will print all the tags for this feature
+        });
+    },
+
+    beforeStep: function beforeStep(step) {
+        // console.log(step); // This will print the step object
+        console.log(step.name); // This will print the name of the current step
+        console.log(step.arguments); // This will print the type of the argument
+    },
+
     //
     // Runs before a WebdriverIO command gets executed.
     // beforeCommand: function beforeCommand(commandName, args) {
     // },
+
+    afterScenario: function afterScenario() {
+        browser.contextProcessor.deleteScenarioContext();
+    },
+
+    afterFeature: function afterScenario() {
+        browser.contextProcessor.deleteFeatureContext();
+    },
+
     //
     // Runs after a WebdriverIO command gets executed
     // afterCommand: function afterCommand(commandName, args, result, error) {
@@ -236,7 +266,7 @@ exports.config = {
     // Hook that gets executed after the suite has ended
     // afterSuite: function afterSuite(suite) {
     // },
-    //
+
     // Gets executed after all tests are done. You still have access to all
     // global variables from the test.
     // after: function after(result, capabilities, specs) {
@@ -246,4 +276,10 @@ exports.config = {
     // exit. It is not possible to defer the end of the process using a promise.
     // onComplete: function onComplete(exitCode) {
     // }
+
+    params: {
+        dummyParam1: 'dummyValue1',
+        dummyParam2: ['dummyValue20', 'dummyValue21'],
+        dummyParam3: { dummyKey3: 'dummyValue3' },
+    },
 };

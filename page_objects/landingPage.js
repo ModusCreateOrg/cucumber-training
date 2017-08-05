@@ -1,18 +1,20 @@
 // landing.page.js
-"use strict";
+
+'use strict';
+
 import Page from './page';
 
 class LandingPage extends Page {
     get usernameField() {
-        return browser.element("input[id=\"email\"]");
+        return browser.element('input[id="email"]');
     }
 
     get passwordField() {
-        return browser.element("input[id=\"pass\"]");
+        return browser.element('input[id="pass"]');
     }
 
     get loginButton() {
-        return browser.element("label[id=\"loginbutton\"] input");
+        return browser.element('label[id="loginbutton"] input');
     }
 
     open() {

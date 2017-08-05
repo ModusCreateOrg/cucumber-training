@@ -161,5 +161,5 @@ Feature: Test login
 ```
 
 For more information on contributors see:
- - [link](https://github.com/popescunsergiu).
- - [link](https://github.com/mallorym)
+ - [MalloryM](https://github.com/mallorym)
+ - [SergiuP](https://github.com/popescunsergiu)

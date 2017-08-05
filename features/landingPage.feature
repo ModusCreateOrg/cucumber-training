@@ -1,3 +1,4 @@
+@WiP
 Feature: Test login
   As a QA
   I want to check login functionality
@@ -6,7 +7,7 @@ Feature: Test login
   Background:
     Given I open the site landing page
 
-
+  @Example
   Scenario: Login using valid credentials
     When I login using email sergiu@moduscreate.com and password dummyPassword
     Then I am successfully logged in

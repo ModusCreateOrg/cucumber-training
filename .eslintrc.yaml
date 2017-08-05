@@ -16,7 +16,7 @@ root: true
 
 rules:
   comma-dangle:
-    - 'error'
+    - 'warn'
     - arrays: 'always-multiline'
       objects: 'always-multiline'
       imports: 'never'
