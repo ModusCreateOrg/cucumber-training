@@ -1,11 +1,11 @@
 import { defineSupportCode } from 'cucumber';
 
-defineSupportCode(({ Then }) => {
-    Then(/^I am redirected to Login page$/, () => {
-        console.log(browser.contextProcessor.getScenarioContext());
-    });
+defineSupportCode(({Then}) => {
+  Then(/^I am redirected to Login page$/, () => {
+    return 'pending';
+  });
 
-    Then(/^(.*) message is displayed$/, (messageType) => {
-        return 'pending';
-    });
+  Then(/^(.*) message is displayed$/, (messageType) => {
+    return 'pending';
+  });
 });
