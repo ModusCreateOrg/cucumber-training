@@ -5,13 +5,13 @@
  * Page file
  */
 class Page {
-    constructor() {
-        this.title = 'Facebook';
-    }
+  constructor() {
+    this.title = '';
+  }
 
-    open(path) {
-        browser.url(`/${path}`);
-    }
+  open(path) {
+    browser.url('/' + path);
+  }
 }
 
 module.exports = Page;
